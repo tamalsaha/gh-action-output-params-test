@@ -15,6 +15,7 @@ jobs:
 
     - name: Generate Test Parameters
       id: params
+      # https://unix.stackexchange.com/a/230676/42136
       run: |
         echo ::set-output name=namespace::kubedb-enterprise-$(head /dev/urandom | tr -dc A-Za-z0-9 | head -c 13 ; echo '')
 
