@@ -20,12 +20,12 @@ jobs:
         which head
 
     - name: Run a one-line script
-      run: echo $(tr -dc 'a-zA-Z0-9' < /dev/urandom | fold -w 32 | head -n 1)
+      run: echo $(head /dev/urandom | tr -dc A-Za-z0-9 | head -c 13 ; echo '')
 
     - name: Run a multi-line script
       id: xyz
       run: |
-        rnd=$(tr -dc 'a-zA-Z0-9' < /dev/urandom | fold -w 32 | head -n 1)
+        rnd=$(head /dev/urandom | tr -dc A-Za-z0-9 | head -c 13 ; echo '')
         echo ::set-output name=namespace::kubedb-enterprise-$rnd
 
     - name: Print
