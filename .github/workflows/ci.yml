@@ -13,29 +13,10 @@ jobs:
     steps:
     - uses: actions/checkout@v2
 
-    - name: Run a one-line script
-      run: |
-        which tr
-        which fold
-        which head
-
-    - name: Run a one-line script
-      run: echo $(head /dev/urandom | tr -dc A-Za-z0-9 | head -c 13 ; echo '')
-
-    - name: Run a multi-line script
-      id: xyz
-      run: |
-        rnd=$(head /dev/urandom | tr -dc A-Za-z0-9 | head -c 13 ; echo '')
-        echo ::set-output name=namespace::kubedb-enterprise-$rnd
-
-    - name: Print
-      run: |
-        echo ">>>>>" ${{ steps.xyz.outputs.namespace }}
-
     - name: Generate Test Parameters
       id: params
       run: |
-        echo ::set-output name=namespace::kubedb-enterprise-$(cat /dev/urandom | tr -dc 'a-zA-Z0-9' | fold -w 10 | head -n 1)
+        echo ::set-output name=namespace::kubedb-enterprise-$(head /dev/urandom | tr -dc A-Za-z0-9 | head -c 13 ; echo '')
 
     - name: Print
       run: |
