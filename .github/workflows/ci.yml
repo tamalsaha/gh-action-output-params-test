@@ -19,7 +19,7 @@ jobs:
     - name: Run a multi-line script
       id: xyz
       run: |
-        rnd=$(cat /dev/urandom | tr -dc 'a-zA-Z0-9' | fold -w 10 | head -n 1)
+        rnd=$(tr -dc 'a-zA-Z0-9' < /dev/urandom | fold -w 32 | head -n 1)
         echo ::set-output name=namespace::kubedb-enterprise-$rnd
 
     - name: Print
