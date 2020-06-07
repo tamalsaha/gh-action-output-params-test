@@ -1,0 +1,36 @@
+name: CI
+
+on:
+  push:
+    branches: [ master ]
+  pull_request:
+    branches: [ master ]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v2
+
+    - name: Run a one-line script
+      run: echo $(cat /dev/urandom | tr -dc 'a-zA-Z0-9' | fold -w 10 | head -n 1)
+
+    - name: Run a multi-line script
+      id: xyz
+      run: |
+        rnd=$(cat /dev/urandom | tr -dc 'a-zA-Z0-9' | fold -w 10 | head -n 1)
+        echo ::set-output name=namespace::kubedb-enterprise-$rnd
+
+    - name: Print
+      run: |
+        echo ">>>>>" ${{ steps.xyz.outputs.namespace }}
+
+    - name: Generate Test Parameters
+      id: params
+      run: |
+        echo ::set-output name=namespace::kubedb-enterprise-$(cat /dev/urandom | tr -dc 'a-zA-Z0-9' | fold -w 10 | head -n 1)
+
+    - name: Print
+      run: |
+        echo ">>>>>" ${{ steps.params.outputs.namespace }}
